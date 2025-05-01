@@ -1,0 +1,54 @@
+﻿@page "/test"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Test virtualization</PageTitle>
+
+<RadzenDataGrid @ref="grid" Data="@FilteredRoomRows" Count="@FilteredRoomRows.Count" TItem="RoomRow" AllowSorting=true AllowVirtualization=true VirtualizationOverscanCount="10" Style="height: calc(100vh - 200px);" CellRender="@CellRender">
+    <Columns>
+        <RadzenDataGridColumn Title="RoomNumber" CssClass="rz-p-1" Property="Room.RoomNumber" SortOrder="SortOrder.Ascending" Frozen="true" MinWidth="220px" Width="220px">
+            <Template Context="data">
+                @data.Room.RoomNumber
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="RowIndex" CssClass="rz-p-1" Property="Index" MinWidth="220px" Width="220px">
+            <Template Context="data">
+                @data.Index
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>
+
+@code {
+    private RadzenDataGrid<RoomRow> grid;
+    private List<RoomRow> FilteredRoomRows = new();
+    protected override async Task OnInitializedAsync()
+    {
+        var rooms = Enumerable.Range(1,50).Select(i=> new Room{ RoomNumber = i.ToString(), Capacity = new Random().Next(5) }).ToList();
+        FilteredRoomRows = rooms.SelectMany((room, index) => Enumerable.Range(1, room.Capacity).Select(i => new RoomRow { Index = i, Room = room })).ToList();
+    }
+    private void CellRender(DataGridCellRenderEventArgs<RoomRow> args)
+    {
+        if (args.Column.Property == "Room.RoomNumber")
+        {
+            if (args.Data.Index == 1)
+            {
+                args.Attributes.Add("rowspan", args.Data.Room.Capacity);
+            }
+            else
+            {
+                args.Attributes.Add("hidden", "true");
+            }
+        }
+    }
+    class RoomRow
+    {
+        public int Index { get; set; }
+        public Room Room { get; set; }
+    }
+    class Room
+    {
+        public string RoomNumber { get; set; }
+        public int Capacity { get; set; }
+    }
+
+}

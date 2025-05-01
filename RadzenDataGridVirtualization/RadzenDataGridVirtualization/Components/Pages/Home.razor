@@ -1,0 +1,22 @@
+﻿@page "/"
+<h3>Home</h3>
+
+<p>
+    This is a sample application to demonstrate the virtualization capabilities of the <a href="https://blazor.radzen.com/datagrid">Radzen DataGrid</a>.
+    The DataGrid is capable of rendering large amounts of data without performance issues.
+    The example below shows how to use the <code>CellRender</code> event to render a cell with a rowspan.
+    The example uses a <code>Room</code> class with a <code>RoomNumber</code> and a <code>Capacity</code>.
+    The <code>RoomRow</code> class is used to represent a row in the DataGrid.
+    The <code>CellRender</code> event is used to set the rowspan of the <code>RoomNumber</code> cell based on the <code>Capacity</code> of the room.
+    The <code>FilteredRoomRows</code> property is used to filter the rows in the DataGrid.
+    The <code>OnInitializedAsync</code> method is used to initialize the data for the DataGrid.
+    The <code>CellRender</code> method is used to set the rowspan of the <code>RoomNumber</code> cell based on the <code>Capacity</code> of the room.
+    The <code>RoomRow</code> class is used to represent a row in the DataGrid.
+    The <code>Room</code> class is used to represent a room with a <code>RoomNumber</code> and a <code>Capacity</code>.
+
+
+</p>
+<h3>NOTE: The issue may not be occure at first open the page, but when you scroll down and up the page, the issue will be occure.</h3>
+@code {
+
+}
